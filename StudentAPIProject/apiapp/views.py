@@ -12,9 +12,14 @@ def homeview(request):
     return HttpResponse("<h1>Hello Shailesh....</h1>")
 
 
-@api_view(['GET',])
+@api_view(['GET','POST',])
 def studentview(request):
-    stud = Student.objects.all()
     if request.method=="GET":
+        stud = Student.objects.all()
         serializer = StudentSerializer(stud,many=True)
         return Response(serializer.data)
+    elif request.method=="POST":
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
