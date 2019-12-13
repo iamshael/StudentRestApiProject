@@ -3,4 +3,5 @@ from apiapp import views
 
 urlpatterns = [
     path('home/', views.homeview),
+    path('student/',views.studentview),
 ]
